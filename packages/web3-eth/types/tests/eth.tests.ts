@@ -18,30 +18,26 @@
  * @date 2018
  */
 
-import {Log} from 'web3-core';
+import BigNumber from "bignumber.js";
+import { Log } from "web3-core";
 import {
+    BlockHeader,
     BlockTransactionObject,
     BlockTransactionString,
-    BlockHeader,
     Eth,
     GetProof,
-    Syncing,
     RLPEncodedTransaction,
+    Syncing,
     Transaction,
     TransactionReceipt,
-    TransactionConfig,
-    hardfork,
-    Common,
-    chain
-} from 'web3-eth';
-import BN = require('bn.js');
-import BigNumber from 'bignumber.js';
+} from "web3-eth";
+import BN = require("bn.js");
 
 // $ExpectType Eth
 const eth_empty = new Eth();
 
 // $ExpectType Eth
-const eth = new Eth('http://localhost:8545');
+const eth = new Eth("http://localhost:8545");
 
 // $ExpectType provider
 eth.currentProvider;
@@ -80,22 +76,22 @@ eth.handleRevert;
 eth.Contract;
 
 // $ExpectType new (iban: string) => Iban
-eth.Iban;
+// eth.Iban;
 
 // $ExpectType Personal
 eth.personal;
 
 // $ExpectType Accounts
-eth.accounts;
+// eth.accounts;
 
 // $ExpectType any
-eth.extend({property: 'test', methods: [{name: 'method', call: 'method'}]});
+eth.extend({ property: "test", methods: [{ name: "method", call: "method" }] });
 
 // $ExpectType Ens
-eth.ens;
+// eth.ens;
 
 // $ExpectType AbiCoder
-eth.abi;
+// eth.abi;
 
 // $ExpectType Network
 eth.net;
@@ -104,36 +100,33 @@ eth.net;
 eth.clearSubscriptions(() => {});
 
 // $ExpectType Subscription<Log>
-eth.subscribe('logs', {});
+eth.subscribe("logs", {});
 // $ExpectType Subscription<Log>
-eth.subscribe('logs', {}, (error: Error, log: Log) => {});
+eth.subscribe("logs", {}, (error: Error, log: Log) => {});
 
 // $ExpectType Subscription<Syncing>
-eth.subscribe('syncing');
+eth.subscribe("syncing");
 // $ExpectType Subscription<Syncing>
-eth.subscribe(
-    'syncing',
-    (error: Error, result: Syncing) => {}
-);
+eth.subscribe("syncing", (error: Error, result: Syncing) => {});
 
 // $ExpectType Subscription<BlockHeader>
-eth.subscribe('newBlockHeaders');
+eth.subscribe("newBlockHeaders");
 // $ExpectType Subscription<BlockHeader>
 eth.subscribe(
-    'newBlockHeaders',
+    "newBlockHeaders",
     (error: Error, blockHeader: BlockHeader) => {}
 );
 
 // $ExpectType Subscription<string>
-eth.subscribe('pendingTransactions');
+eth.subscribe("pendingTransactions");
 // $ExpectType Subscription<string>
 eth.subscribe(
-    'pendingTransactions',
+    "pendingTransactions",
     (error: Error, transactionHash: string) => {}
 );
 
 // $ExpectType boolean
-eth.setProvider('https://localhost:2100');
+eth.setProvider("https://localhost:2100");
 
 // $ExpectType BatchRequest
 new eth.BatchRequest();
@@ -189,81 +182,84 @@ eth.getBlockNumber();
 eth.getBlockNumber((error: Error, blockNumber: number) => {});
 
 // $ExpectType Promise<string>
-eth.getBalance('0x407d73d8a49eeb85d32cf465507dd71d507100c1');
+eth.getBalance("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
 // $ExpectType Promise<string>
-eth.getBalance('0x407d73d8a49eeb85d32cf465507dd71d507100c1', '1000');
+eth.getBalance("0x407d73d8a49eeb85d32cf465507dd71d507100c1", "1000");
 // $ExpectType Promise<string>
 eth.getBalance(
-    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
-    '1000',
+    "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
+    "1000",
     (error: Error, balance: string) => {}
 );
 // $ExpectType Promise<string>
-eth.getBalance('0x407d73d8a49eeb85d32cf465507dd71d507100c1', 1000);
+eth.getBalance("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 1000);
 // $ExpectType Promise<string>
 eth.getBalance(
-    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+    "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
     1000,
     (error: Error, balance: string) => {}
 );
 
 // $ExpectType Promise<string>
-eth.getStorageAt('0x407d73d8a49eeb85d32cf465507dd71d507100c1', 2);
+eth.getStorageAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 2);
 // $ExpectType Promise<string>
-eth.getStorageAt('0x407d73d8a49eeb85d32cf465507dd71d507100c1', new BN(2));
-// $ExpectType Promise<string>
-eth.getStorageAt('0x407d73d8a49eeb85d32cf465507dd71d507100c1', new BigNumber(2));
-// $ExpectType Promise<string>
-eth.getStorageAt('0x407d73d8a49eeb85d32cf465507dd71d507100c1', 2, '1000');
+eth.getStorageAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1", new BN(2));
 // $ExpectType Promise<string>
 eth.getStorageAt(
-    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+    "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
+    new BigNumber(2)
+);
+// $ExpectType Promise<string>
+eth.getStorageAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 2, "1000");
+// $ExpectType Promise<string>
+eth.getStorageAt(
+    "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
     2,
-    '1000',
+    "1000",
     (error: Error, balance: string) => {}
 );
 // $ExpectType Promise<string>
-eth.getStorageAt('0x407d73d8a49eeb85d32cf465507dd71d507100c1', 2, 1000);
+eth.getStorageAt("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 2, 1000);
 // $ExpectType Promise<string>
 eth.getStorageAt(
-    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+    "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
     2,
     1000,
     (error: Error, balance: string) => {}
 );
 
 // $ExpectType Promise<string>
-eth.getCode('0x407d73d8a49eeb85d32cf465507dd71d507100c1');
+eth.getCode("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
 // $ExpectType Promise<string>
-eth.getCode('0x407d73d8a49eeb85d32cf465507dd71d507100c1', '1000');
+eth.getCode("0x407d73d8a49eeb85d32cf465507dd71d507100c1", "1000");
 // $ExpectType Promise<string>
 eth.getCode(
-    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
-    '1000',
+    "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
+    "1000",
     (error: Error, balance: string) => {}
 );
 // $ExpectType Promise<string>
-eth.getCode('0x407d73d8a49eeb85d32cf465507dd71d507100c1', 1000);
+eth.getCode("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 1000);
 // $ExpectType Promise<string>
 eth.getCode(
-    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+    "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
     1000,
     (error: Error, balance: string) => {}
 );
 
 // $ExpectType Promise<BlockTransactionString>
-eth.getBlock('0x407d73d8a49eeb85d32cf465507dd71d507100c1');
+eth.getBlock("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
 // $ExpectType Promise<BlockTransactionString>
 eth.getBlock(345);
 // $ExpectType Promise<BlockTransactionObject>
-eth.getBlock('0x407d73d8a49eeb85d32cf465507dd71d507100c1', true);
+eth.getBlock("0x407d73d8a49eeb85d32cf465507dd71d507100c1", true);
 // $ExpectType Promise<BlockTransactionString>
 eth.getBlock(345);
 // $ExpectType Promise<BlockTransactionObject>
 eth.getBlock(345, true);
 // $ExpectType Promise<BlockTransactionString>
 eth.getBlock(
-    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+    "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
     (error: Error, block: BlockTransactionString) => {}
 );
 // $ExpectType Promise<BlockTransactionString>
@@ -272,35 +268,35 @@ eth.getBlock(345, (error: Error, block: BlockTransactionString) => {});
 eth.getBlock(345, true, (error: Error, block: BlockTransactionObject) => {});
 // $ExpectType Promise<BlockTransactionObject>
 eth.getBlock(
-    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+    "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
     true,
     (error: Error, block: BlockTransactionObject) => {}
 );
 
 // $ExpectType Promise<number>
 eth.getBlockTransactionCount(
-    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+    "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
     (error: Error, numberOfTransactions: number) => {}
 );
 // $ExpectType Promise<number>
 eth.getBlockTransactionCount(345);
 // $ExpectType Promise<number>
 eth.getBlockTransactionCount(
-    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+    "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
     (error: Error, numberOfTransactions: number) => {}
 );
 // $ExpectType Promise<number>
 eth.getBlockTransactionCount(345);
 
 // $ExpectType Promise<BlockTransactionString>
-eth.getUncle('0x407d73d8a49eeb85d32cf465507dd71d507100c1', 4);
+eth.getUncle("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 4);
 // $ExpectType Promise<BlockTransactionString>
 eth.getUncle(345, 4);
 // $ExpectType Promise<BlockTransactionObject>
-eth.getUncle('0x407d73d8a49eeb85d32cf465507dd71d507100c1', 4, true);
+eth.getUncle("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 4, true);
 // $ExpectType Promise<BlockTransactionString>
 eth.getUncle(
-    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+    "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
     4,
     (error: Error, uncle: {}) => {}
 );
@@ -310,7 +306,7 @@ eth.getUncle(345, 4, (error: Error, uncle: {}) => {});
 eth.getUncle(345, 4, true);
 // $ExpectType Promise<BlockTransactionObject>
 eth.getUncle(
-    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+    "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
     4,
     true,
     (error: Error, uncle: {}) => {}
@@ -319,20 +315,20 @@ eth.getUncle(
 eth.getUncle(345, 4, true, (error: Error, uncle: {}) => {});
 
 // $ExpectType Promise<Transaction>
-eth.getTransaction('0x407d73d8a49eeb85d32cf465507dd71d507100c1');
+eth.getTransaction("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
 // $ExpectType Promise<Transaction>
 eth.getTransaction(
-    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+    "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
     (error: Error, transaction: Transaction) => {}
 );
 
 // $ExpectType Promise<Transaction>
-eth.getTransactionFromBlock('0x407d73d8a49eeb85d32cf465507dd71d507100c1', 2);
+eth.getTransactionFromBlock("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 2);
 // $ExpectType Promise<Transaction>
 eth.getTransactionFromBlock(345, 2);
 // $ExpectType Promise<Transaction>
 eth.getTransactionFromBlock(
-    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+    "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
     2,
     (error: Error, transaction: Transaction) => {}
 );
@@ -344,175 +340,175 @@ eth.getTransactionFromBlock(
 );
 
 // $ExpectType Promise<TransactionReceipt>
-eth.getTransactionReceipt('0x407d73d8a49eeb85d32cf465507dd71d507100c1');
+eth.getTransactionReceipt("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
 // $ExpectType Promise<TransactionReceipt>
 eth.getTransactionReceipt(
-    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+    "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
     (error: Error, transactionReceipt: TransactionReceipt) => {}
 );
 
 // $ExpectType Promise<number>
-eth.getTransactionCount('0x407d73d8a49eeb85d32cf465507dd71d507100c1');
+eth.getTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1");
 // $ExpectType Promise<number>
-eth.getTransactionCount('0x407d73d8a49eeb85d32cf465507dd71d507100c1', 1000);
+eth.getTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1", 1000);
 // $ExpectType Promise<number>
-eth.getTransactionCount('0x407d73d8a49eeb85d32cf465507dd71d507100c1', '1000');
+eth.getTransactionCount("0x407d73d8a49eeb85d32cf465507dd71d507100c1", "1000");
 // $ExpectType Promise<number>
 eth.getTransactionCount(
-    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+    "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
     (error: Error, count: number) => {}
 );
 // $ExpectType Promise<number>
 eth.getTransactionCount(
-    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+    "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
     (error: Error, count: number) => {}
 );
 // $ExpectType Promise<number>
 eth.getTransactionCount(
-    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
+    "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
     1000,
     (error: Error, count: number) => {}
 );
 // $ExpectType Promise<number>
 eth.getTransactionCount(
-    '0x407d73d8a49eeb85d32cf465507dd71d507100c1',
-    '1000',
+    "0x407d73d8a49eeb85d32cf465507dd71d507100c1",
+    "1000",
     (error: Error, count: number) => {}
 );
 
-const code = '603d80600c6000396000f3007c0';
+const code = "603d80600c6000396000f3007c0";
 
 // $ExpectType PromiEvent<TransactionReceipt>
 eth.sendTransaction({
-    from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe',
-    data: 'code'
+    from: "0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe",
+    data: "code",
 });
 // $ExpectType PromiEvent<TransactionReceipt>
 eth.sendTransaction(
     {
-        from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe',
-        data: 'code'
+        from: "0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe",
+        data: "code",
     },
     (error: Error, hash: string) => {}
 );
 
 // $ExpectType PromiEvent<TransactionReceipt>
-eth.sendSignedTransaction('0xf889808609184e72a0008227109');
+eth.sendSignedTransaction("0xf889808609184e72a0008227109");
 // $ExpectType PromiEvent<TransactionReceipt>
 eth.sendSignedTransaction(
-    '0xf889808609184e72a0008227109',
+    "0xf889808609184e72a0008227109",
     (error: Error, hash: string) => {}
 );
 
 // $ExpectType Promise<string>
-eth.sign('Hello world', '0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe');
+eth.sign("Hello world", "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe");
 // $ExpectType Promise<string>
-eth.sign('Hello world', 3);
+eth.sign("Hello world", 3);
 // $ExpectType Promise<string>
 eth.sign(
-    'Hello world',
-    '0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe',
+    "Hello world",
+    "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe",
     (error: Error, signature: string) => {}
 );
 // $ExpectType Promise<string>
-eth.sign('Hello world', 3, (error: Error, signature: string) => {});
+eth.sign("Hello world", 3, (error: Error, signature: string) => {});
 
 // $ExpectType Promise<RLPEncodedTransaction>
 eth.signTransaction({
-    from: '0xEB014f8c8B418Db6b45774c326A0E64C78914dC0',
-    gasPrice: '20000000000',
-    gas: '21000',
-    to: '0x3535353535353535353535353535353535353535',
-    value: '1000000000000000000',
-    data: ''
+    from: "0xEB014f8c8B418Db6b45774c326A0E64C78914dC0",
+    gasPrice: "20000000000",
+    gas: "21000",
+    to: "0x3535353535353535353535353535353535353535",
+    value: "1000000000000000000",
+    data: "",
 });
 // $ExpectType Promise<RLPEncodedTransaction>
 eth.signTransaction(
     {
-        from: '0xEB014f8c8B418Db6b45774c326A0E64C78914dC0',
-        gasPrice: '20000000000',
-        gas: '21000',
-        to: '0x3535353535353535353535353535353535353535',
-        value: '1000000000000000000',
-        data: ''
+        from: "0xEB014f8c8B418Db6b45774c326A0E64C78914dC0",
+        gasPrice: "20000000000",
+        gas: "21000",
+        to: "0x3535353535353535353535353535353535353535",
+        value: "1000000000000000000",
+        data: "",
     },
-    '0xEB014f8c8B418Db6b45774c326A0E64C78914dC0'
+    "0xEB014f8c8B418Db6b45774c326A0E64C78914dC0"
 );
 // $ExpectType Promise<RLPEncodedTransaction>
 eth.signTransaction(
     {
-        from: '0xEB014f8c8B418Db6b45774c326A0E64C78914dC0',
-        gasPrice: '20000000000',
-        gas: '21000',
-        to: '0x3535353535353535353535353535353535353535',
-        value: '1000000000000000000',
-        data: ''
+        from: "0xEB014f8c8B418Db6b45774c326A0E64C78914dC0",
+        gasPrice: "20000000000",
+        gas: "21000",
+        to: "0x3535353535353535353535353535353535353535",
+        value: "1000000000000000000",
+        data: "",
     },
     (error: Error, signedTransaction: RLPEncodedTransaction) => {}
 );
 // $ExpectType Promise<RLPEncodedTransaction>
 eth.signTransaction(
     {
-        from: '0xEB014f8c8B418Db6b45774c326A0E64C78914dC0',
-        gasPrice: '20000000000',
-        gas: '21000',
-        to: '0x3535353535353535353535353535353535353535',
-        value: '1000000000000000000',
-        data: ''
+        from: "0xEB014f8c8B418Db6b45774c326A0E64C78914dC0",
+        gasPrice: "20000000000",
+        gas: "21000",
+        to: "0x3535353535353535353535353535353535353535",
+        value: "1000000000000000000",
+        data: "",
     },
-    '0xEB014f8c8B418Db6b45774c326A0E64C78914dC0',
+    "0xEB014f8c8B418Db6b45774c326A0E64C78914dC0",
     (error: Error, signedTransaction: RLPEncodedTransaction) => {}
 );
 
 // $ExpectType Promise<string>
 eth.call({
-    to: '0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe', // contract address
+    to: "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", // contract address
     data:
-        '0xc6888fa10000000000000000000000000000000000000000000000000000000000000003'
+        "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003",
 });
 // $ExpectType Promise<string>
 eth.call(
     {
-        to: '0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe', // contract address
+        to: "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", // contract address
         data:
-            '0xc6888fa10000000000000000000000000000000000000000000000000000000000000003'
+            "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003",
     },
     100
 );
 // $ExpectType Promise<string>
 eth.call(
     {
-        to: '0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe', // contract address
+        to: "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", // contract address
         data:
-            '0xc6888fa10000000000000000000000000000000000000000000000000000000000000003'
+            "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003",
     },
-    '100'
+    "100"
 );
 // $ExpectType Promise<string>
 eth.call(
     {
-        to: '0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe', // contract address
+        to: "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", // contract address
         data:
-            '0xc6888fa10000000000000000000000000000000000000000000000000000000000000003'
+            "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003",
     },
     (error: Error, data: string) => {}
 );
 // $ExpectType Promise<string>
 eth.call(
     {
-        to: '0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe', // contract address
+        to: "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", // contract address
         data:
-            '0xc6888fa10000000000000000000000000000000000000000000000000000000000000003'
+            "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003",
     },
-    '100',
+    "100",
     (error: Error, data: string) => {}
 );
 // $ExpectType Promise<string>
 eth.call(
     {
-        to: '0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe', // contract address
+        to: "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", // contract address
         data:
-            '0xc6888fa10000000000000000000000000000000000000000000000000000000000000003'
+            "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003",
     },
     100,
     (error: Error, data: string) => {}
@@ -521,9 +517,9 @@ eth.call(
 // $ExpectType Promise<string>
 eth.call(
     {
-        to: '0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe', // contract address
+        to: "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", // contract address
         data:
-            '0xc6888fa10000000000000000000000000000000000000000000000000000000000000003'
+            "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003",
     },
     100,
     (error: Error, data: string) => {}
@@ -531,32 +527,34 @@ eth.call(
 
 // $ExpectType Promise<number>
 eth.estimateGas({
-    to: '0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe',
+    to: "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe",
     data:
-        '0xc6888fa10000000000000000000000000000000000000000000000000000000000000003'
+        "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003",
 });
 // $ExpectType Promise<number>
 eth.estimateGas(
     {
-        to: '0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe',
+        to: "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe",
         data:
-            '0xc6888fa10000000000000000000000000000000000000000000000000000000000000003'
+            "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003",
     },
     (error: Error, gas: number) => {}
 );
 
 // $ExpectType Promise<Log[]>
 eth.getPastLogs({
-    address: '0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe',
-    topics: ['0x033456732123ffff2342342dd12342434324234234fd234fd23fd4f23d4234']
+    address: "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe",
+    topics: [
+        "0x033456732123ffff2342342dd12342434324234234fd234fd23fd4f23d4234",
+    ],
 });
 // $ExpectType Promise<Log[]>
 eth.getPastLogs(
     {
-        address: '0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe',
+        address: "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe",
         topics: [
-            '0x033456732123ffff2342342dd12342434324234234fd234fd23fd4f23d4234'
-        ]
+            "0x033456732123ffff2342342dd12342434324234234fd234fd23fd4f23d4234",
+        ],
     },
     (error: Error, logs: Log[]) => {}
 );
@@ -568,17 +566,17 @@ eth.getWork((error: Error, result: string[]) => {});
 
 // $ExpectType Promise<boolean>
 eth.submitWork([
-    '0x0000000000000001',
-    '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef',
-    '0xD1FE5700000000000000000000000000D1FE5700000000000000000000000000'
+    "0x0000000000000001",
+    "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+    "0xD1FE5700000000000000000000000000D1FE5700000000000000000000000000",
 ]);
 
 // $ExpectType Promise<boolean>
 eth.submitWork(
     [
-        '0x0000000000000001',
-        '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef',
-        '0xD1FE5700000000000000000000000000D1FE5700000000000000000000000000'
+        "0x0000000000000001",
+        "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+        "0xD1FE5700000000000000000000000000D1FE5700000000000000000000000000",
     ],
     (error: Error, result: boolean) => {}
 );
@@ -591,41 +589,41 @@ eth.getPendingTransactions((error: Error, result: Transaction[]) => {});
 
 // $ExpectType Promise<GetProof>
 eth.getProof(
-    '0x1234567890123456789012345678901234567890',
+    "0x1234567890123456789012345678901234567890",
     [
-        '0x0000000000000000000000000000000000000000000000000000000000000000',
-        '0x0000000000000000000000000000000000000000000000000000000000000001'
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x0000000000000000000000000000000000000000000000000000000000000001",
     ],
-    'latest'
+    "latest"
 );
 
 // $ExpectType Promise<GetProof>
 eth.getProof(
-    '0x1234567890123456789012345678901234567890',
+    "0x1234567890123456789012345678901234567890",
     [
-        '0x0000000000000000000000000000000000000000000000000000000000000000',
-        '0x0000000000000000000000000000000000000000000000000000000000000001'
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x0000000000000000000000000000000000000000000000000000000000000001",
     ],
-    'latest',
+    "latest",
     (error: Error, result: GetProof) => {}
 );
 
 // $ExpectType Promise<GetProof>
 eth.getProof(
-    '0x1234567890123456789012345678901234567890',
+    "0x1234567890123456789012345678901234567890",
     [
-        '0x0000000000000000000000000000000000000000000000000000000000000000',
-        '0x0000000000000000000000000000000000000000000000000000000000000001'
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x0000000000000000000000000000000000000000000000000000000000000001",
     ],
     10
 );
 
 // $ExpectType Promise<GetProof>
 eth.getProof(
-    '0x1234567890123456789012345678901234567890',
+    "0x1234567890123456789012345678901234567890",
     [
-        '0x0000000000000000000000000000000000000000000000000000000000000000',
-        '0x0000000000000000000000000000000000000000000000000000000000000001'
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x0000000000000000000000000000000000000000000000000000000000000001",
     ],
     10,
     (error: Error, result: GetProof) => {}

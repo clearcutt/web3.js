@@ -19,11 +19,18 @@
  * @date 2018
  */
 
-import * as net from 'net';
+import { BigNumber } from "bignumber.js";
+import * as net from "net";
 import {
     BatchRequest,
+    BlockNumber,
+    chain,
+    Common,
     Extension,
+    hardfork,
     Log,
+    LogsOptions,
+    PastLogsOptions,
     PromiEvent,
     provider,
     Providers,
@@ -31,34 +38,27 @@ import {
     Transaction,
     TransactionConfig,
     TransactionReceipt,
-    Common,
-    hardfork,
-    chain,
-    BlockNumber,
-    LogsOptions,
-    PastLogsOptions
-} from 'web3-core';
-import {Subscription} from 'web3-core-subscriptions';
-import {AbiCoder} from 'web3-eth-abi';
-import {Accounts} from 'web3-eth-accounts';
-import {Contract, ContractOptions} from 'web3-eth-contract';
-import {Ens} from 'web3-eth-ens';
-import {Iban} from 'web3-eth-iban';
-import {Personal} from 'web3-eth-personal';
-import {Network} from 'web3-net';
-import {AbiItem} from 'web3-utils';
-import {BigNumber} from 'bignumber.js';
-import BN = require('bn.js');
+} from "web3-core";
+import { Subscription } from "web3-core-subscriptions";
+// import {AbiCoder} from 'web3-eth-abi';
+// import {Accounts} from 'web3-eth-accounts';
+import { Contract, ContractOptions } from "web3-eth-contract";
+// import {Ens} from 'web3-eth-ens';
+// import {Iban} from 'web3-eth-iban';
+import { Personal } from "web3-eth-personal";
+import { Network } from "web3-net";
+import { AbiItem } from "web3-utils";
+import BN = require("bn.js");
 
 export {
-    TransactionConfig,
+    chain,
+    Common,
+    hardfork,
     RLPEncodedTransaction,
     Transaction,
+    TransactionConfig,
     TransactionReceipt,
-    hardfork,
-    Common,
-    chain
-} from 'web3-core';
+} from "web3-core";
 
 export class Eth {
     constructor();
@@ -70,11 +70,11 @@ export class Eth {
         address?: string,
         options?: ContractOptions
     ) => Contract;
-    Iban: new (iban: string) => Iban;
+    // Iban: new (iban: string) => Iban;
     personal: Personal;
-    accounts: Accounts;
-    ens: Ens;
-    abi: AbiCoder;
+    // accounts: Accounts;
+    // ens: Ens;
+    // abi: AbiCoder;
     net: Network;
 
     readonly givenProvider: any;
@@ -100,20 +100,20 @@ export class Eth {
     clearSubscriptions(callback: (error: Error, result: boolean) => void): void;
 
     subscribe(
-        type: 'logs',
+        type: "logs",
         options: LogsOptions,
         callback?: (error: Error, log: Log) => void
     ): Subscription<Log>;
     subscribe(
-        type: 'syncing',
+        type: "syncing",
         callback?: (error: Error, result: Syncing) => void
     ): Subscription<Syncing>;
     subscribe(
-        type: 'newBlockHeaders',
+        type: "newBlockHeaders",
         callback?: (error: Error, blockHeader: BlockHeader) => void
     ): Subscription<BlockHeader>;
     subscribe(
-        type: 'pendingTransactions',
+        type: "pendingTransactions",
         callback?: (error: Error, transactionHash: string) => void
     ): Subscription<string>;
 
@@ -157,12 +157,8 @@ export class Eth {
         callback?: (error: Error, blockNumber: number) => void
     ): Promise<number>;
 
-    getBalance(
-        address: string
-    ): Promise<string>;
-    getBalance(
-        address: string,
-        defaultBlock: BlockNumber): Promise<string>;
+    getBalance(address: string): Promise<string>;
+    getBalance(address: string, defaultBlock: BlockNumber): Promise<string>;
     getBalance(
         address: string,
         callback?: (error: Error, balance: string) => void
@@ -173,7 +169,10 @@ export class Eth {
         callback?: (error: Error, balance: string) => void
     ): Promise<string>;
 
-    getStorageAt(address: string, position: number | BigNumber | BN | string): Promise<string>;
+    getStorageAt(
+        address: string,
+        position: number | BigNumber | BN | string
+    ): Promise<string>;
     getStorageAt(
         address: string,
         position: number | BigNumber | BN | string,
@@ -191,13 +190,8 @@ export class Eth {
         callback?: (error: Error, storageAt: string) => void
     ): Promise<string>;
 
-    getCode(
-        address: string
-    ): Promise<string>;
-    getCode(
-        address: string,
-        defaultBlock: BlockNumber
-    ): Promise<string>;
+    getCode(address: string): Promise<string>;
+    getCode(address: string, defaultBlock: BlockNumber): Promise<string>;
     getCode(
         address: string,
         callback?: (error: Error, code: string) => void
@@ -208,7 +202,9 @@ export class Eth {
         callback?: (error: Error, code: string) => void
     ): Promise<string>;
 
-    getBlock(blockHashOrBlockNumber: BlockNumber | string): Promise<BlockTransactionString>;
+    getBlock(
+        blockHashOrBlockNumber: BlockNumber | string
+    ): Promise<BlockTransactionString>;
     getBlock(
         blockHashOrBlockNumber: BlockNumber | string,
         returnTransactionObjects: boolean
@@ -372,11 +368,13 @@ export class Eth {
     getProof(
         address: string,
         storageKey: number[] | BigNumber[] | BN[] | string[],
-        blockNumber: BlockNumber,
+        blockNumber: BlockNumber
     ): Promise<GetProof>;
 
-    requestAccounts(): Promise<string[]>
-    requestAccounts(callback: (error: Error, result: string[]) => void): Promise<string[]>
+    requestAccounts(): Promise<string[]>;
+    requestAccounts(
+        callback: (error: Error, result: string[]) => void
+    ): Promise<string[]>;
 }
 
 export interface Syncing {
